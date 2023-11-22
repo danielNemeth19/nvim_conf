@@ -5,8 +5,7 @@ lsp.preset('recommended')
 lsp.ensure_installed({
 	'tsserver',
 	'gopls',
-	'gopls',
-	'pylyzer'
+    'pylsp' 
 })
 
 local cmp = require('cmp')
@@ -26,6 +25,22 @@ lsp.set_preferences({
 lsp.setup_nvim_cmp({
 	mapping = cmp_mappings
 })
+
+
+lsp.configure('pylsp', {
+  settings = {
+    pylsp = {
+      plugins = {
+        flake8 = {enabled = false},
+	    pycodestyle = {enabled = true, maxLineLength = 120},
+        pyflakes = {enabled = false},
+        pylint = {enabled = true, args = {"--max-line-length=120", "--disable=C0114,C0115,C0116"}},
+        mccabe = {enabled = false},
+      }
+    }
+  }
+})
+
 
 lsp.on_attach(function(client, bufnr)
 	local opts = {buffer = bufnr, remap = false}
