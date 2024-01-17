@@ -5,7 +5,8 @@ lsp.preset('recommended')
 lsp.ensure_installed({
 	'tsserver',
 	'gopls',
-    'pylsp' 
+    'pylsp',
+    'lua_ls'
 })
 
 local cmp = require('cmp')
@@ -41,6 +42,15 @@ lsp.configure('pylsp', {
   }
 })
 
+lsp.configure('lua_ls', {
+	settings = {
+		Lua = {
+			diagnostics = {
+				globals = {'vim', 'describe', 'it', 'P', 'equals', 'before_each'}
+			}
+		}
+	}
+})
 
 lsp.on_attach(function(client, bufnr)
 	local opts = {buffer = bufnr, remap = false}
