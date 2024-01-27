@@ -42,11 +42,18 @@ lsp.configure('pylsp', {
   }
 })
 
+require("neodev").setup({
+  -- neovim setup for for init.lua and plugin development with signature_help and docs and completion for the neovim lua API
+  -- setup needs to be called before the lua lsp setup
+})
 lsp.configure('lua_ls', {
 	settings = {
 		Lua = {
 			diagnostics = {
 				globals = {'vim', 'describe', 'it', 'P', 'equals', 'before_each'}
+			},
+			runtime = {
+				version = "Lua 5.1"
 			}
 		}
 	}

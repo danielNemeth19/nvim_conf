@@ -11,13 +11,14 @@ return require('packer').startup(function(use)
 	  'nvim-telescope/telescope.nvim', tag = '0.1.5',
 	  requires = { {'nvim-lua/plenary.nvim'} }
   }
-use('rebelot/kanagawa.nvim')
-use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
-use('nvim-treesitter/playground')
-use('theprimeagen/harpoon')
-use('mbbill/undotree')
-use('tpope/vim-fugitive')
-use{
+  use('rebelot/kanagawa.nvim')
+  use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
+  use('nvim-treesitter/playground')
+  use('theprimeagen/harpoon')
+  use('mbbill/undotree')
+  use('tpope/vim-fugitive')
+  use('folke/neodev.nvim')
+  use{
 	'Vonheikemen/lsp-zero.nvim',
 	requires = {
 		-- LSP Support
