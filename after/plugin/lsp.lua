@@ -44,7 +44,7 @@ lsp.configure('pylsp', {
 
 require("neodev").setup({
 	-- neovim setup for for init.lua and plugin development with signature_help and docs and completion for the neovim lua API
-	-- setup needs to be called before the lua lsp setup:w
+	-- setup needs to be called before the lua lsp setup
 })
 
 lsp.configure('lua_ls', {
