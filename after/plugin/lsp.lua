@@ -5,6 +5,8 @@ vim.diagnostic.config({
     underline = false,
     virtual_text = {
         source = "if_many",
+        spacing = 2,
+        prefix = "●"
     }
 })
 
@@ -61,7 +63,7 @@ require('mason-lspconfig').setup({
                             version = 'LuaJIT'
                         },
                         diagnostics = {
-                            globals = { 'vim', 'describe', 'before_each', 'after_each', 'it' }
+                            globals = { 'vim', 'describe', 'before_each', 'after_each', 'it', 'P' }
                         },
                         workspace = {
                             library = {
@@ -98,7 +100,7 @@ cmp.setup({
     },
     mapping = cmp.mapping.preset.insert({
         -- Enter key confirms completion item
-        ['<CR>'] = cmp.mapping.confirm({ select = false }),
+        ['<Tab>'] = cmp.mapping.confirm({ select = false }),
 
         -- Ctrl + space triggers completion menu
         ['<C-Space>'] = cmp.mapping.complete(),

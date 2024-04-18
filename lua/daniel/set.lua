@@ -33,3 +33,4 @@ vim.opt.colorcolumn = "180"
 
 vim.g.mapleader = " "
 
+vim.opt.showmode = false
