@@ -10,3 +10,5 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 -- Enables copying yanked content over and over 
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
+-- Runs all tests of the current lua file
+vim.keymap.set("n", "<leader>t",'<cmd>PlenaryBustedFile %<CR>')

@@ -20,6 +20,7 @@ return require('packer').startup(function(use)
 	use('mbbill/undotree')
 	use('tpope/vim-fugitive')
 	use('folke/neodev.nvim')
+	use('j-hui/fidget.nvim')
 	use {
 		'Vonheikemen/lsp-zero.nvim',
 		requires = {
