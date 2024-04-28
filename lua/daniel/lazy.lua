@@ -10,41 +10,14 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     })
 end
 vim.opt.rtp:prepend(lazypath)
-local packages = {
-    {
-        'nvim-telescope/telescope.nvim',
-        event = 'VimEnter',
-        tag = '0.1.6',
-        dependencies = {
-            'nvim-lua/plenary.nvim',
-            {
-                'nvim-telescope/telescope-fzf-native.nvim',
-
-                build = 'make',
-
-                cond = function()
-                    return vim.fn.executable 'make' == 1
-                end,
-            },
-            { 'nvim-telescope/telescope-ui-select.nvim' },
-            {
-                'nvim-tree/nvim-web-devicons',
-                enabled = vim.g.have_nerd_font
-            }
-        },
-    },
-    {
-        'nvim-treesitter/nvim-treesitter',
-        build = ':TSUpdate',
-    },
+--[[ local packages = {
     'nvim-treesitter/playground',
     'echasnovski/mini.nvim',
     'lewis6991/gitsigns.nvim',
     'rebelot/kanagawa.nvim',
     'theprimeagen/harpoon',
     'mbbill/undotree',
-    'tpope/vim-fugitive',
-    'folke/neodev.nvim',
+    'tpope/vim-fugitive', 'folke/neodev.nvim',
     'j-hui/fidget.nvim',
     -- LSP Support
     { 'neovim/nvim-lspconfig' },
@@ -70,9 +43,19 @@ local packages = {
     },
     'someone-stole-my-name/yaml-companion.nvim',
     { 'danielNemeth19/bulk-comment.nvim', dev = true }
-}
+} --]]
 
-require('lazy').setup(packages, {
+-- require('lazy').setup(packages, {
+    -- dev = {
+        -- path = '~/Workspace'
+    -- }
+-- })
+
+require('lazy').setup({
+        { import = "daniel.plugins"},
+        { import = "daniel.plugins.lsp"}
+    },
+    {
     dev = {
         path = '~/Workspace'
     }
