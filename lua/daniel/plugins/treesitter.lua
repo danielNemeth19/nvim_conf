@@ -1,4 +1,5 @@
 return {
+    {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate',
         opts = {
@@ -27,4 +28,6 @@ return {
             local treesitter = require("nvim-treesitter.configs")
             treesitter.setup(opts)
         end
+    },
+    { "nvim-treesitter/playground" }
 }

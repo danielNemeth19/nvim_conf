@@ -28,8 +28,8 @@ return {
                 }
             }
         }
-        pcall(require('telescope').load_extension, 'fzf')
-        pcall(require('telescope').load_extension, 'ui-select')
+        require('telescope').load_extension('fzf')
+        require('telescope').load_extension('ui-select')
         local builtin = require 'telescope.builtin'
         vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
         vim.keymap.set('n', '<C-p>', builtin.git_files, {})
