@@ -1,6 +1,6 @@
 require("daniel.set")
 require("daniel.lazy")
 require("daniel.remap")
-require("daniel.lsp_base")
+require("daniel.diagnostic_base")
 require("daniel.globals")
 require("daniel.autocommands")

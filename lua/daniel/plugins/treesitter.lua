@@ -23,10 +23,9 @@ return {
             },
             indent = { enable = true },
         },
-        config = function(opts)
+        config = function(_, opts)
             require("nvim-treesitter.install").prefer_git = true
-            local treesitter = require("nvim-treesitter.configs")
-            treesitter.setup(opts)
+            require("nvim-treesitter.configs").setup(opts)
         end
     },
     { "nvim-treesitter/playground" }

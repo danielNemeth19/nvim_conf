@@ -12,11 +12,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-        { import = "daniel.plugins"},
-        { import = "daniel.plugins.lsp"}
+        { import = "daniel.plugins" }
     },
     {
-    dev = {
-        path = '~/Workspace'
-    }
-})
+        dev = {
+            path = '~/Workspace'
+        }
+    })
