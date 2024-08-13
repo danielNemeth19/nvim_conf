@@ -1,4 +1,5 @@
 return {
     'danielNemeth19/bulk-comment.nvim',
-    dev = true
+    dev = true,
+    event = "VeryLazy"
 }
