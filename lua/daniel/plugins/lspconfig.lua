@@ -10,6 +10,7 @@ return {
     },
     config = function()
         vim.api.nvim_create_autocmd('LspAttach', {
+            group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
             desc = 'LSP Actions',
             callback = function(event)
                 local opts = { buffer = event.buf }
@@ -28,13 +29,34 @@ return {
                 -- These are default anyway but added for clarity
                 vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, opts)
                 vim.keymap.set('n', '<F3>', vim.lsp.buf.format, opts)
-            end
-        })
-        vim.api.nvim_create_autocmd('LspDetach', {
-            group = vim.api.nvim_create_augroup('lps-detach', { clear = true }),
-            callback = function(event)
-                vim.lsp.buf.clear_references()
-                vim.api.nvim_clear_autocmds({ group = 'lsp-detach', buffer = event.buf })
+
+                local client = vim.lsp.get_client_by_id(event.data.client_id)
+                if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+                    local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
+                    vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+                        buffer = event.buf,
+                        group = highlight_augroup,
+                        -- callback = vim.lsp.buf.document_highlight,
+                        callback = function()
+                            print('cursor hold executed')
+                            vim.lsp.buf.document_highlight()
+                        end,
+                    })
+
+                    vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+                        buffer = event.buf,
+                        group = highlight_augroup,
+                        callback = vim.lsp.buf.clear_references,
+                    })
+
+                    vim.api.nvim_create_autocmd('LspDetach', {
+                        group = vim.api.nvim_create_augroup('lsp-detach', { clear = true }),
+                        callback = function(event2)
+                            vim.lsp.buf.clear_references()
+                            vim.api.nvim_clear_autocmds { group = 'lsp-highlight', buffer = event2.buf }
+                        end,
+                    })
+                end
             end
         })
         --continue here
