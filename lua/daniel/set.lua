@@ -35,6 +35,5 @@ vim.g.mapleader = " "
 
 vim.opt.showmode = false
 
+-- This is to make sure that Copilot's default Tab key to accept suggestions is disabled
 vim.g.copilot_no_tab_map = true
-vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
-vim.api.nvim_set_keymap("n", "<leader>c", '<cmd>CopilotChatToggle <CR>', {})

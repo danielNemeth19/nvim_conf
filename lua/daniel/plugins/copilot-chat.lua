@@ -8,6 +8,13 @@ return {
         },
         opts = {
             debug = true,
-        }
+        },
+        config = function()
+            require("CopilotChat").setup()
+            vim.keymap.set("n", "<leader>c", function ()
+                vim.cmd("CopilotChatToggle")
+            end)
+        end,
     }
 }
+
