@@ -3,11 +3,12 @@ return {
         'hrsh7th/nvim-cmp',
         event = "InsertEnter",
         dependencies = {
-            -- { 'L3MON4D3/LuaSnip',
-            -- build = (function() 
-                -- return "make install_jsregexp"
-            -- end)
-        -- },
+            {
+                'L3MON4D3/LuaSnip',
+                build = (function()
+                    return "make install_jsregexp"
+                end)
+            },
             { 'hrsh7th/cmp-buffer' },
             { 'hrsh7th/cmp-path' },
             { 'saadparwaiz1/cmp_luasnip' },
@@ -15,6 +16,8 @@ return {
             { 'hrsh7th/cmp-nvim-lua' },
         },
         config = function()
+            vim.api.nvim_set_hl(0, "CmpCursor", { fg = "black", bg = "#9ccfd8", bold = true })
+            vim.api.nvim_set_hl(0, "CmpFloatBorder", { fg = "white", bg = "#1f1f28" })
             local cmp = require('cmp')
             cmp.setup({
                 sources = {
@@ -32,8 +35,17 @@ return {
                         require('luasnip').lsp_expand(args.body)
                     end,
                 },
+                window = {
+                    completion = {
+                        border = "rounded",
+                        winhighlight = "CursorLine:CmpCursor,FloatBorder:CmpFloatBorder"
+                    },
+                    documentation = {
+                        border = "rounded",
+                        winhighlight = "CursorLine:CmpCursor,FloatBorder:CmpFloatBorder"
+                    }
+                }
             })
         end
     }
 }
-
