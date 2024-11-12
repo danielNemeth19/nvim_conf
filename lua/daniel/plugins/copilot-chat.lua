@@ -11,10 +11,9 @@ return {
         },
         config = function()
             require("CopilotChat").setup()
-            vim.keymap.set("n", "<leader>cc", function ()
+            vim.keymap.set("n", "<leader>cc", function()
                 vim.cmd("CopilotChatToggle")
-            end)
+            end, { noremap = true, silent = true, desc = "Toggles copilot chat" })
         end,
     }
 }
-
