@@ -69,6 +69,18 @@ return {
         local capabilities = vim.lsp.protocol.make_client_capabilities()
         capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
+        --This function can dynamicaly set the pylint executable to correct path
+        --if a python virtualenv is activated (hence on path)
+        local function set_pylint_path()
+            local path = os.getenv("PATH")
+            for path_elem in string.gmatch(path, "[^:]+") do
+                if string.find(path_elem, "virtualenv") ~= nil then
+                    return path_elem .. "/pylint"
+                end
+            end
+            return nil
+        end
+
         -- Enable the following language servers
         --
         --  Add any additional override configuration in the following tables. Available keys are:
@@ -111,13 +123,17 @@ return {
                             flake8 = { enabled = false },
                             pycodestyle = { enabled = true, maxLineLength = 120 },
                             pyflakes = { enabled = false },
-                            pylint = { enabled = true, args = { "--max-line-length=120", "--disable=C0114,C0115,C0116" } },
+                            pylint = {
+                                enabled = true,
+                                executable = set_pylint_path()
+                            },
                             mccabe = { enabled = false },
                         }
                     }
-                }
+                },
             }
         }
+        set_pylint_path()
         require('mason').setup()
         --define other tools that we want Mason to install
         local ensure_installed = vim.tbl_keys(servers or {})
