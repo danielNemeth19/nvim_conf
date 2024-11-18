@@ -72,11 +72,15 @@ return {
         --This function can dynamicaly set the pylint executable to correct path
         --if a python virtualenv is activated (hence on path)
         local function set_pylint_path()
-            local path = os.getenv("PATH")
-            for path_elem in string.gmatch(path, "[^:]+") do
-                if string.find(path_elem, "virtualenv") ~= nil then
-                    return path_elem .. "/pylint"
+            local venv = os.getenv("VIRTUAL_ENV")
+            if venv then
+                local pylint_path = venv .. "/bin/pylint"
+                if vim.fn.executable(pylint_path) == 1 then
+                    return venv .. "/bin/pylint"
                 end
+                -- If we're in a python virtual env but pylint is not installed set path to 'nil'
+                -- to fallback to pylsp's pylint (~/.local/share/nvim/mason/packages/python-lsp-server/venv/bin/pylint)
+                return nil
             end
             return nil
         end
@@ -133,7 +137,6 @@ return {
                 },
             }
         }
-        set_pylint_path()
         require('mason').setup()
         --define other tools that we want Mason to install
         local ensure_installed = vim.tbl_keys(servers or {})
