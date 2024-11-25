@@ -25,15 +25,21 @@ return {
             extensions = {
                 ['ui-select'] = {
                     require('telescope.themes').get_dropdown(),
-                }
+                },
+                -- advanced_git_search = {
+
+                -- }
             }
         }
         require('telescope').load_extension('fzf')
         require('telescope').load_extension('ui-select')
         require('telescope').load_extension('file_browser')
+        require('telescope').load_extension('advanced_git_search')
         local builtin = require 'telescope.builtin'
         vim.keymap.set('n', '<leader>ff', builtin.find_files,
             { noremap = true, silent = true, desc = "Telescope: finding files" })
+        vim.keymap.set('n', '<leader>of', builtin.oldfiles,
+            { noremap = true, silent = true, desc = "Telescope: finding old files" })
         vim.keymap.set('n', '<C-p>', builtin.git_files,
             { noremap = true, silent = true, desc = "Telescope: fuzzy finding git files" })
         vim.keymap.set('n', '<leader>o', builtin.lsp_document_symbols,
@@ -58,6 +64,9 @@ return {
         end, { noremap = true, silent = true, desc = "Telescope: grep project" })
         vim.keymap.set('n', '<leader>fb', function()
             require("telescope").extensions.file_browser.file_browser()
-        end, { noremap = true, silent = true, desc = "Telescope: grep project" })
+        end, { noremap = true, silent = true, desc = "Telescope: file_browser" })
+        vim.keymap.set("n", '<leader>gd', function ()
+            require("telescope").extensions.advanced_git_search.diff_commit_file()
+        end,  { noremap = true, silent = true, desc= "Telescope: advanced_git_search diff against commits"})
     end
 }
