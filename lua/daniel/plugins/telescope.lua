@@ -26,9 +26,6 @@ return {
                 ['ui-select'] = {
                     require('telescope.themes').get_dropdown(),
                 },
-                -- advanced_git_search = {
-
-                -- }
             }
         }
         require('telescope').load_extension('fzf')
@@ -42,7 +39,7 @@ return {
             { noremap = true, silent = true, desc = "Telescope: finding old files" })
         vim.keymap.set('n', '<C-p>', builtin.git_files,
             { noremap = true, silent = true, desc = "Telescope: fuzzy finding git files" })
-        vim.keymap.set('n', '<leader>o', builtin.lsp_document_symbols,
+        vim.keymap.set('n', '<leader>oo', builtin.lsp_document_symbols,
             { noremap = true, silent = true, desc = "Telescope: LSP document symbols" })
         vim.keymap.set('n', '<leader>r', builtin.lsp_references,
             { noremap = true, silent = true, desc = "Telescope: LSP references" })
@@ -68,5 +65,26 @@ return {
         vim.keymap.set("n", '<leader>gd', function ()
             require("telescope").extensions.advanced_git_search.diff_commit_file()
         end,  { noremap = true, silent = true, desc= "Telescope: advanced_git_search diff against commits"})
+        vim.keymap.set("n", '<leader>nc', function ()
+            builtin.find_files {
+                prompt_title = "Neovim config",
+                cwd = vim.fn.stdpath("config")
+            }
+        end, { noremap = true, silent = true, desc= "Telescope: find neovim config files"})
+        vim.keymap.set("n", '<leader>ft', function ()
+            builtin.find_files {
+                prompt_title = "Find tests",
+                find_command = {
+                    "rg",
+                    "--files",
+                    "--glob",
+                    "**/test*/**/test*.py",
+                    "--glob",
+                    "**/*test*.go",
+                    "--glob",
+                    "**/test*/*.lua",
+                },
+            }
+        end, { noremap = true, silent = true, desc= "Telescope: find tests"})
     end
 }
