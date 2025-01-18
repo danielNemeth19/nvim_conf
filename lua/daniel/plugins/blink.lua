@@ -15,7 +15,7 @@ return {
                 }
             },
             list = {
-                selection = "preselect",
+                selection = { preselect = true, auto_insert = true }
             },
             ghost_text = { enabled = true },
             menu = {

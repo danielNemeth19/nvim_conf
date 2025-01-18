@@ -1,11 +1,17 @@
 return {
     'theprimeagen/harpoon',
+    branch = "harpoon2",
+    depdendencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim"
+    },
     config = function()
-        local mark = require("harpoon.mark")
-        local ui = require("harpoon.ui")
+        local harpoon = require("harpoon")
+        harpoon:setup()
 
-        vim.keymap.set("n", "<leader>a", mark.add_file, { noremap = true, silent = true, desc = "Harpoon add file" })
-        vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu,
+        vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
+
+        vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
             { noremap = true, silent = true, desc = "Harpoon show tracked files" })
     end
 }
