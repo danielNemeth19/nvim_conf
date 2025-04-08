@@ -1,4 +1,4 @@
-vim.opt.guicursor = ""
+vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50"
 
 vim.opt.nu = true
 vim.opt.relativenumber = true
@@ -37,3 +37,4 @@ vim.opt.showmode = false
 
 -- This is to make sure that Copilot's default Tab key to accept suggestions is disabled
 vim.g.copilot_no_tab_map = true
+vim.g.copilot_enabled = false
