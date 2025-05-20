@@ -10,5 +10,9 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", {desc = "Move highlighted row up"})
 -- Enables copying yanked content over and over 
 vim.keymap.set("x", "<leader>p", [["_dP]], {desc = "Enables copying yanked content over and over"})
 
+-- Switch buffers with tab
+vim.keymap.set("n", "<S-TAB>", "<CMD>bprevious<CR>")
+vim.keymap.set("n", "<TAB>", "<CMD>bnext<CR>")
+
 -- Runs all tests of the current lua file
 vim.keymap.set("n", "<leader>t",'<cmd>PlenaryBustedFile %<CR>', { desc = "Runs all tests of the current lua file"})
