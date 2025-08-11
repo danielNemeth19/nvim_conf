@@ -2,12 +2,26 @@ return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
-    { 'williamboman/mason.nvim',                  config = true },
-    { 'williamboman/mason-lspconfig.nvim' },
-    { 'WhoIsSethDaniel/mason-tool-installer.nvim' },
-    { "folke/neodev.nvim",                        opts = {} },
-    { "j-hui/fidget.nvim",                        opts = {} },
-    { "saghen/blink.cmp" },
+    {
+      'williamboman/mason.nvim',
+      config = true
+    },
+    {
+      'williamboman/mason-lspconfig.nvim'
+    },
+    {
+      'WhoIsSethDaniel/mason-tool-installer.nvim'
+    },
+    {
+      "folke/neodev.nvim",
+      opts = {}
+    },
+    { "j-hui/fidget.nvim",
+      opts = {}
+    },
+    {
+      "saghen/blink.cmp"
+    },
   },
   config = function()
     vim.api.nvim_create_autocmd('LspAttach', {
@@ -77,7 +91,6 @@ return {
         local pylint_path = venv .. "/bin/pylint"
         if vim.fn.executable(pylint_path) == 1 then
           local to_exec = venv .. "/bin/pylint"
-          print(to_exec)
           return venv .. "/bin/pylint"
         end
         -- If we're in a python virtual env but pylint is not installed set path to 'nil'
@@ -124,6 +137,11 @@ return {
             },
             completion = {
               callSnippet = 'Replace',
+            },
+            type = {
+              -- Enforce type annotation usage and strict checking
+              enforceAnnotation = true,
+              strict = true,
             },
             workspace = {
               library = {

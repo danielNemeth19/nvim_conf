@@ -32,6 +32,7 @@ vim.opt.updatetime = 3000
 vim.opt.colorcolumn = "180"
 
 vim.g.mapleader = " "
+vim.g.maplocalleader = ","
 
 vim.opt.showmode = false
 
