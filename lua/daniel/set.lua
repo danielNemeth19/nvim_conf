@@ -39,3 +39,5 @@ vim.opt.showmode = false
 -- This is to make sure that Copilot's default Tab key to accept suggestions is disabled
 vim.g.copilot_no_tab_map = true
 vim.g.copilot_enabled = false
+
+vim.g.have_nerd_font = true

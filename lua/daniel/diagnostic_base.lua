@@ -1,17 +1,34 @@
 vim.diagnostic.config({
-  float = {
-    border = 'rounded'
-  },
-  underline = false,
+  severity_sort = true,
+  float = { border = 'rounded', source = 'if_many' },
+  underline = { severity = vim.diagnostic.severity.ERROR },
+  signs = vim.g.have_nerd_font and {
+    text = {
+      [vim.diagnostic.severity.ERROR] = '󰅚 ',
+      [vim.diagnostic.severity.WARN] = '󰀪 ',
+      [vim.diagnostic.severity.INFO] = '󰋽 ',
+      [vim.diagnostic.severity.HINT] = '󰌶 ',
+    },
+  } or {},
   virtual_text = {
-    source = "if_many",
+    source = 'if_many',
     spacing = 2,
-    prefix = "●"
-  }
+    format = function(diagnostic)
+      local diagnostic_message = {
+        [vim.diagnostic.severity.ERROR] = diagnostic.message,
+        [vim.diagnostic.severity.WARN] = diagnostic.message,
+        [vim.diagnostic.severity.INFO] = diagnostic.message,
+        [vim.diagnostic.severity.HINT] = diagnostic.message,
+      }
+      return diagnostic_message[diagnostic.severity]
+    end,
+  },
 })
 vim.keymap.set('n', 'gl', vim.diagnostic.open_float,
   { noremap = true, silent = true, desc = "Open diagnostics in floating window" })
-vim.keymap.set('n', '<leader>dp', vim.diagnostic.goto_prev,
-  { noremap = true, silent = true, desc = "Jump to previous diagnostic item" })
-vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next,
-  { noremap = true, silent = true, desc = "Jump to next diagnostic item" })
+vim.keymap.set('n', '<leader>dp', function()
+  vim.diagnostic.jump({ count = 1, float = true })
+end, { noremap = true, silent = true, desc = "Jump to previous diagnostic item" })
+vim.keymap.set('n', '<leader>dn', function()
+  vim.diagnostic.jump({ count = -1, float = true })
+end, { noremap = true, silent = true, desc = "Jump to next diagnostic item" })

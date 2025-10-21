@@ -2,25 +2,22 @@ return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
+    { 'mason-org/mason.nvim', opts = {} },
+    'mason-org/mason-lspconfig.nvim',
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    { "j-hui/fidget.nvim",    opts = {} },
+    { "saghen/blink.cmp" },
     {
-      'williamboman/mason.nvim',
-      config = true
-    },
-    {
-      'williamboman/mason-lspconfig.nvim'
-    },
-    {
-      'WhoIsSethDaniel/mason-tool-installer.nvim'
-    },
-    {
-      "folke/neodev.nvim",
-      opts = {}
-    },
-    { "j-hui/fidget.nvim",
-      opts = {}
-    },
-    {
-      "saghen/blink.cmp"
+      -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
+      -- used for completion, annotations and signatures of Neovim apis
+      'folke/lazydev.nvim',
+      ft = 'lua',
+      opts = {
+        library = {
+          -- Load luvit types when the `vim.uv` word is found
+          { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+        },
+      },
     },
   },
   config = function()
