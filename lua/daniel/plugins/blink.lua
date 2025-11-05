@@ -11,37 +11,40 @@ return {
     completion = {
       accept = {
         auto_brackets = {
-          enabled = false
-        }
+          enabled = false,
+        },
       },
       list = {
-        selection = { preselect = true, auto_insert = true }
+        selection = { preselect = true, auto_insert = true },
       },
       ghost_text = { enabled = true },
       menu = {
         max_height = 20,
-        border = "rounded",
+        border = 'rounded',
       },
       documentation = {
         auto_show = true,
         treesitter_highlighting = true,
         window = {
-          border = "rounded"
-        }
-      }
+          border = 'rounded',
+        },
+      },
     },
     keymap = { preset = 'default' },
     appearance = {
-      nerd_font_variant = 'mono'
+      nerd_font_variant = 'mono',
     },
     sources = {
       default = { 'lsp', 'path', 'snippets', 'buffer' },
+      per_filetype = {
+        codecompanion = { 'codecompanion' },
+      }
       -- optionally disable cmdline completions
       -- cmdline = {},
     },
-    signature = { enabled = true }
+    signature = { enabled = true },
   },
   -- allows extending the providers array elsewhere in your config
   -- without having to redefine it
-  opts_extend = { "sources.default" }
+  opts_extend = { 'sources.default' },
 }
