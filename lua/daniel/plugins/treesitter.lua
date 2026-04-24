@@ -1,4 +1,4 @@
-local log_level = vim.log.levels.INFO
+local log_level = vim.log.levels.DEBUG
 local branch = 'main'
 
 local function notify(msg, level)
@@ -36,36 +36,41 @@ local function install_and_start()
       end
 
       local parser_configs = require 'nvim-treesitter.parsers'
-      notify('parser configs: ' .. vim.inspect(parser_configs), vim.log.levels.DEBUG)
-      local parser_can_be_used = nil
+      -- notify('parser configs: ' .. vim.inspect(parser_configs), vim.log.levels.DEBUG)
+      local parser_config = nil
       if branch == 'master' then
-        parser_can_be_used = parser_configs.list[parser_name]
+        parser_config = parser_configs.list[parser_name]
       elseif branch == 'main' then
-        parser_can_be_used = parser_configs[parser_name]
-        notify('parser can be used' .. vim.inspect(parser_can_be_used), vim.log.levels.DEBUG)
+        parser_config = parser_configs[parser_name]
+        notify('parser can be used' .. vim.inspect(parser_config), vim.log.levels.DEBUG)
       end
-      if not parser_can_be_used then
+      if not parser_config then
         return
       end
 
-      local parser_installed = pcall(vim.treesitter.get_parser, bufnr, parser_name)
-      notify('parser installed: ' .. vim.inspect(parser_installed), vim.log.levels.DEBUG)
+      local parser_installed, parser_object = pcall(vim.treesitter.get_parser, bufnr, parser_name)
 
-      if not parser_installed then
+      vim.inspect(parser_object)
+      if not parser_installed or not parser_object then
         if branch == 'master' then
           vim.cmd('TSInstallSync ' .. parser_name)
         elseif branch == 'main' then
-          require('nvim-treesitter').install({ parser_name }):wait(30000)
+          local ok, result = require('nvim-treesitter').install({ parser_name }):wait(30000)
+          if not ok then
+            notify("install error: " .. vim.inspect(result), vim.log.levels.ERROR )
+          else
+            notify("Install result: " .. vim.inspect(result), vim.log.levels.INFO)
+          end
         end
       end
 
       parser_installed = pcall(vim.treesitter.get_parser, bufnr, parser_name)
-      notify('parser installed 2: ' .. vim.inspect(parser_installed), vim.log.levels.DEBUG)
-      if not parser_installed then
-        notify('Failed to get parser for ' .. parser_name .. ' after installation', vim.log.levels.WARN)
-        return
-      end
-
+      parser_installed, parser_object = pcall(vim.treesitter.get_parser, bufnr, parser_name)
+      -- notify('parser installed 2: ' .. vim.inspect(parser_installed), vim.log.levels.DEBUG)
+      -- if not parser_installed then
+        -- notify('Failed to get parser for ' .. parser_name .. ' after installation', vim.log.levels.WARN)
+        -- return
+      -- end
       vim.treesitter.start(bufnr, parser_name)
     end,
   })
