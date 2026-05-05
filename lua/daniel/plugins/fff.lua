@@ -1,18 +1,28 @@
 return {
   "dmtrKovalenko/fff.nvim",
-  build = "cargo build --release",
+  build = function ()
+      require("fff.download").download_or_build_binary()
+  end,
   opts = {
     debug = {
+      enabled = true,
       show_scores = true
-    }
+    },
+    prompt = "󰣇 "
   },
+  lazy = false,
   keys = {
-    {
-      "ff", -- try it if you didn't it is a banger keybinding for a picker
-      function()
-        require("fff").find_files() -- or find_in_git_root() if you only want git files
-      end,
-      desc = "Open file picker",
+    { "ff", function() require("fff").find_files() end, desc = "Open file picker" },
+    { "fg", function() require('fff').live_grep() end, desc = 'LiFFFe grep' },
+    { "fz",
+      function() require('fff').live_grep({ grep = { modes = { 'fuzzy', 'plain' } } }) end,
+      desc = 'Live fffuzy grep',
+    },
+    { "fc",
+      function() require('fff').live_grep({ query = vim.fn.expand("<cword>") }) end,
+      desc = 'Search current word',
     },
   },
 }
+
+
