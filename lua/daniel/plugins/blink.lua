@@ -38,7 +38,7 @@ return {
       default = { 'lsp', 'path', 'snippets', 'buffer' },
       per_filetype = {
         codecompanion = { 'codecompanion' },
-      }
+      },
       -- optionally disable cmdline completions
       -- cmdline = {},
     },

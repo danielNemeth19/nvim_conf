@@ -3,7 +3,6 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     { 'mason-org/mason.nvim', opts = {} },
-    'mason-org/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     { "j-hui/fidget.nvim",    opts = {} },
     { "saghen/blink.cmp" },
@@ -163,19 +162,23 @@ return {
             }
           }
         },
-      }
+      },
+      ts_ls = {},
+      clangd = {},
     }
     require('mason').setup()
+    -- listing explicitly all servers that needs to be installed
     --define other tools that we want Mason to install
-    local ensure_installed = vim.tbl_keys(servers or {})
-    vim.list_extend(ensure_installed, {
-      'stylua', -- Used to format Lua code
-    })
+    local ensure_installed = {
+        'css-lsp',
+        'gopls',
+        'lua-language-server',
+        'python-lsp-server',
+        'typescript-language-server',
+        'clangd',
+        'stylua',-- Used to format Lua code
+    }
     require('mason-tool-installer').setup({ ensure_installed = ensure_installed })
-
-    require('mason-lspconfig').setup({
-      ensure_installed = {}
-    })
 
     vim.lsp.config('*', {
       capabilities = capabilities
@@ -183,6 +186,7 @@ return {
 
     for server, config in pairs(servers) do
       vim.lsp.config(server, config)
+      vim.lsp.enable(server)
     end
   end
 }
