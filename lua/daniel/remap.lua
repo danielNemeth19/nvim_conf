@@ -1,4 +1,4 @@
-vim.keymap.set("n", "<leader>í", vim.cmd.Ex, { desc = "Navigate back to file explorer" })
+vim.keymap.set("n", "<leader>e", vim.cmd.Ex, { desc = "Navigate back to file explorer" })
 
 -- Allows to move highlighted row(s) up and down
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move highlighted row down" })
